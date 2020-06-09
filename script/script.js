@@ -27,7 +27,6 @@ console.log(getExpensesMonth())
 function getAccumulatedMonth() {
     return money - (amount1 + amount2);
 }
-console.log(getAccumulatedMonth());
 
 let accumulatedMonth = getAccumulatedMonth();
 console.log(accumulatedMonth);
