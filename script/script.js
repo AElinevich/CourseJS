@@ -1,37 +1,36 @@
-let money = 3000;
+
 let income = 'Разработка сайтов';
-let addExpenses = 'Аренда, коммуналка, питание, шоппинг';
-let deposit = true;
 let mission = 100000;
 let period = 12;
-let budgetDay = money / 30;
+
 
 // Task 3
 // 2
-money = prompt('Ваш месячный доход?', '');
+let money = prompt('Ваш месячный доход?', '');
 console.log(money);
 // 3
-addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', '');
+let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', '');
 console.log(addExpenses);
 //4
-deposit = confirm('Есть ли у вас депозит в банке?');
+let deposit = confirm('Есть ли у вас депозит в банке?');
 console.log(deposit);
 // 5
 let expenses1 = prompt('Введите обязательную статью расходов?', '');
 console.log(expenses1);
 
-let expenses2 = prompt('Введите обязательную статью расходов?', '');
-console.log(expenses2);
-
 let amount1 = +prompt('Во сколько это обойдется?', '');
 console.log(amount1);
 
+let expenses2 = prompt('Введите обязательную статью расходов?', '');
+console.log(expenses2);
+
 let amount2 = +prompt('Во сколько это обойдется?', '');
 console.log(amount2);
+
 // 6
 let budgetMonth = money - (amount1 + amount2);
 console.log('Ваш бюджет на месяц: ' + budgetMonth);
-7
+// 7
 console.log('Ваша цель будет достигнута через:' + Math.ceil(mission / budgetMonth)); 
 // 8
 budgetDay = Math.floor(budgetMonth / 30);
@@ -47,6 +46,3 @@ if (budgetDay >= 1200) {
 } if (budgetDay <= 0) {
     console.log('Что-то пошло не так');
 };
-
-
-
