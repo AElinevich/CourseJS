@@ -32,43 +32,36 @@ let appData = {
         appData.addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', '');
         appData.addExpenses.split(',');
         appData.deposit = confirm('Есть ли у вас депозит в банке?');
-
-
-       
        
         for (let i = 0; i < 2; i++) {
-        appData.expenses[i] = prompt('Введите обязательную статью расходов?', '');
+            let expensesName = prompt('Введите обязательную статью расходов?', '');
            
             do {
                 message = prompt('Во сколько это обойдется?', '');
             }
                 while (!isNumber(message));   
         
-        
-            
-            appData.expenses[appData.expenses[i]] = +message;
-console.table(appData.expenses);
-    
+                appData.expenses[expensesName] = +message;
         } 
-       
-       
-
     },
      getExpensesMonth : function() {
-        let sum = 0;
-         for (key in appData.expenses) {
-            
-            sum += appData.expenses.message;
-            
+            let sum = 0;
+            for (key in appData.expenses) {
+            sum += appData.expenses[key];
+            appData.expensesMonth = sum;
          }
-         console.log(sum);
-return sum
+            
+
     },
-     getAccumulatedMonth : function() {
-        return money - expensesAmount;
+    getBudget: function() {
+            appData.budgetMonth = money - appData.expensesMonth;
+            appData.budgetDay = Math.floor(appData.expensesMonth / 30);
+            console.log('Расходы за месяц: ' + appData.budgetMonth);
+            // console.log('Ваш бюджет на день: ' + appData.budgetDay);
+
     }, 
     getTargetMonth: function  () {
-        return Math.ceil(appData.mission / accumulatedMonth);
+            return Math.ceil(appData.mission / appData.budgetMonth);
         },
     getStatusIncome: function () {
             if (appData.budgetDay >= 1200) {
@@ -85,38 +78,22 @@ return sum
 
 }
 
-console.log(appData.getExpensesMonth);
-appData.asking()
-
- console.log(appData.getStatusIncome());
-
-// let showTypeOf = function(data) {
-//     console.log(data, typeof(data));
-// }
-// showTypeOf(money);
-// showTypeOf(appData.income);
-// showTypeOf(appData.deposit);
-
-
-
-let expensesAmount = appData.getExpensesMonth();
-
-console.log('Расходы за месяц: ' + expensesAmount);
-
-
-
-let accumulatedMonth = appData.getAccumulatedMonth();
-console.log(accumulatedMonth);
-
+appData.asking();
+appData.getExpensesMonth();
+appData.getBudget();
+appData.getTargetMonth();
+appData.getStatusIncome();
+console.log(appData.getStatusIncome())
 
 
 if (appData.getTargetMonth() < 0) {
     console.log('Цель не будет достигнута')
 } else {
-    console.log('Цель будет достигнута через: ' + appData.getTargetMonth());
+    console.log('Цель будет достигнута через: ' + appData.getTargetMonth() + ' месяцев');
 };
 
-let budgetDay = Math.floor(accumulatedMonth / 30);
-console.log('Ваш бюджет на день: ' + appData.budgetDay);
 
-
+for(key in appData)
+{
+    console.log('Наша программа включает в себя данные: ' +  key + appData[key]);
+}
