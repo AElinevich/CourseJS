@@ -61,31 +61,34 @@ let appData = {
             let expensesName;
             let message;
             do {
-                expensesName  = +prompt('Введите обязательную статью расходов?', '');
+                expensesName  = prompt('Введите обязательную статью расходов?', '');
             }
                 while (isNumber(expensesName));   
       
 
             do {
                 message = prompt('Во сколько это обойдется?', '');
+                console.log(typeof message);
             }
                 while (!isNumber(message));   
         
                 appData.expenses[expensesName] = +message;
+                console.log(appData.expenses);
         } 
     },
      getExpensesMonth : function() {
             let sum = 0;
             for (key in appData.expenses) {
-            sum += appData.expenses[key];
+            sum += +appData.expenses[key];
             appData.expensesMonth = sum;
+            console.log(appData.expensesMonth);
          }
             
 
     },
     getBudget: function() {
             appData.budgetMonth = money - appData.expensesMonth;
-            appData.budgetDay = Math.floor(appData.expensesMonth / 30);
+            appData.budgetDay = Math.floor(appData.budgetMonth / 30);
             console.log('Расходы за месяц: ' + appData.expensesMonth);
             // console.log('Ваш бюджет на день: ' + appData.budgetDay);
 
@@ -145,3 +148,5 @@ for(key in appData)
 
 appData.getInfoDeposit();
 console.log(appData.period, appData.moneyDeposit, appData.calcSaveMoney());
+
+console.log(appData);
