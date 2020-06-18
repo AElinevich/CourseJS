@@ -72,8 +72,11 @@ let appData = {
     },
     addExpensesBlock: function() {
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
+        cloneExpensesItem.value = "";
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
         expensesItems = document.querySelectorAll('.expenses-items');
+        
+        console.log(expensesItems.value);
         if(expensesItems.length === 3) {
             expensesPlus.style.display = "none";
         }
@@ -202,15 +205,19 @@ let appData = {
 if(salaryAmount.value === '') {
     start.setAttribute('disabled', 'true');
 }
-if (salaryAmount.value !== ''){
-    start.removeAttribute('disabled', 'true');
-    start.addEventListener('click', appData.start);
-}
+salaryAmount.addEventListener('input', () => {
+    if (salaryAmount.value === ''){
+        start.setAttribute('disabled', 'true');
+    } else {
+        start.removeAttribute('disabled', 'true');
+        start.addEventListener('click', appData.start);
+    }
+})
     expensesPlus.addEventListener('click', appData.addExpensesBlock);
 
     incomePlus.addEventListener('click', appData.addIncomeBlock);
 
-  periodSelect.addEventListener('input', function(){
+    periodSelect.addEventListener('input', function(){
             periodAmount.textContent = periodSelect.value;
 });
 
