@@ -109,7 +109,7 @@ let appData = {
         incomeItems = document.querySelectorAll('.income-items');
         if(incomeItems.length === 3) {
             incomePlus.style.display = "none";
-        }
+        } 
 
     },
     getExpenses: function() {
