@@ -121,13 +121,16 @@ class AppData {
     })
     }
     addExpensesBlock () {
-        let clonedNode = document.querySelector('.expenses-items').cloneNode(true);
-        this.expenses.append(clonedNode);
-        this.expenses.append(this.expensesAdd);
-        let input = [...clonedNode.querySelectorAll('input')];
-        input.forEach(el => el.value = '');
-        // expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
-        // expensesItems = document.querySelectorAll('.expenses-items');
+        let cloneExpensesItem = expensesItems[0].cloneNode(true);
+    cloneExpensesItem.value = "";
+    expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
+    expensesItems = document.querySelectorAll('.expenses-items');
+        // let clonedNode = document.querySelector('.expenses-items').cloneNode(true);
+        // this.expenses.append(clonedNode);
+        // this.expenses.append(this.expensesAdd);
+        // let input = [...clonedNode.querySelectorAll('input')];
+        // input.forEach(el => el.value = '');
+    
         if(document.querySelectorAll('.expenses-items').length === 3) {
             this.expensesAdd.style.display = "none";
         }
