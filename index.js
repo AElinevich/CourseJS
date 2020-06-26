@@ -121,13 +121,15 @@ class AppData {
     })
     }
     addExpensesBlock () {
-        
-        let cloneExpensesItem = expensesItems[0].cloneNode(true);
-        cloneExpensesItem.value = "";
-        expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
-        expensesItems = document.querySelectorAll('.expenses-items');
-        if(expensesItems.length === 3) {
-            expensesPlus.style.display = "none";
+        let clonedNode = document.querySelector('.expenses-items').cloneNode(true);
+        this.expenses.append(clonedNode);
+        this.expenses.append(this.expensesAdd);
+        let input = [...clonedNode.querySelectorAll('input')];
+        input.forEach(el => el.value = '');
+        // expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
+        // expensesItems = document.querySelectorAll('.expenses-items');
+        if(document.querySelectorAll('.expenses-items').length === 3) {
+            this.expensesAdd.style.display = "none";
         }
     }
     addIncomeBlock () {
@@ -237,9 +239,10 @@ class AppData {
             console.log(depositPercent.value);
             depositPercent.style.display = "inline-block";
         
-            depositPercent.addEventListener('change', function () {
+            depositPercent.addEventListener('input', function () {
                 if (!isNumber(depositPercent.value) || depositPercent.value <= 0 || depositPercent.value > 100)
                  {alert('Введите корректное значение в поле проценты');
+                 depositPercent.value = '';
                     start.setAttribute('disabled', 'true');
                     return;
             }
