@@ -130,9 +130,12 @@ class AppData {
         // this.expenses.append(this.expensesAdd);
         // let input = [...clonedNode.querySelectorAll('input')];
         // input.forEach(el => el.value = '');
-    
-        if(document.querySelectorAll('.expenses-items').length === 3) {
-            this.expensesAdd.style.display = "none";
+        // if(document.querySelectorAll('.expenses-items').length === 3) {
+        //     this.expensesAdd.style.display = "none";
+        // }
+        
+        if(expensesItems.length === 3) {
+            expensesPlus.style.display = "none";
         }
     }
     addIncomeBlock () {
