@@ -78,27 +78,27 @@ const togglePopup = () => {
         const popupClose = document.querySelector('.popup-close');
         const popupContent = document.querySelector('.popup-content')
         
-        let width = document.documentElement.clientWidth;
-        console.log(width);
-        if(width < 768) {
-            clearInterval(timer); 
-            return;
-        } else {     
+        
+
         popupBtn.forEach((elem) => {
             elem.addEventListener('click', () => {
-                
-                console.log(width);
                 popup.style.display = 'block';
                 let start = Date.now(); 
 
         let timer = setInterval(function() {
         let timePassed = Date.now() - start;
-
+        
         if (timePassed >= 3500) {
             clearInterval(timer); 
             return;
         }
-        
+        let width = document.documentElement.clientWidth;
+        if(width < 768) {
+            clearInterval(timer); 
+            popup.style.display = 'block';
+            return;
+        }  
+    
     show(timePassed);
 
     }, 10);
@@ -114,7 +114,7 @@ popupClose.addEventListener('click', () => {
         });
       
     };
-}
+
 togglePopup()
 
 
