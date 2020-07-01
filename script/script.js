@@ -46,28 +46,33 @@ function updateclock(){
 
     }
     countTimer('30 july 2020')
-    // меню
-    const toggleMenu = () => {
+
+     // меню
+     const toggleMenu = () => {
         const btnMenu = document.querySelector('.menu');
         const menu = document.querySelector('menu');
-        const closeBtn = document.querySelector('.close-btn');
         const menuItems = menu.querySelectorAll('ul>li');
-const handlerMenu = () => {
-    menu.classList.toggle('active-menu');
     
-}
-        btnMenu.addEventListener('click', handlerMenu);
-        closeBtn.addEventListener('click', handlerMenu);
-        
-        
-        menuItems.forEach((elem) => {elem.addEventListener('click', handlerMenu)})
-       
+        btnMenu.addEventListener('click', () => {
+            menu.classList.toggle('active-menu');
+        })
 
-      
-      
+        menu.addEventListener('click', (event) => {
+            let target = event.target;
+            if(target.classList.contains('close-btn')){
+                menu.classList.remove('active-menu');
+                 } else {target = target.classList.contains('active-menu');
+                 if(!target) {
+                     console.log(target);
+                    menu.classList.remove('active-menu');
+                }}
+                 
+               
+})
 
     };
-    
+
+
     toggleMenu();
   
    // popup 
@@ -75,11 +80,9 @@ const handlerMenu = () => {
 const togglePopup = () => {
         const popup = document.querySelector('.popup');
         const popupBtn = document.querySelectorAll('.popup-btn');
-        const popupClose = document.querySelector('.popup-close');
         const popupContent = document.querySelector('.popup-content')
         
         
-
         popupBtn.forEach((elem) => {
             elem.addEventListener('click', () => {
                 popup.style.display = 'block';
@@ -109,10 +112,20 @@ const togglePopup = () => {
     });
                 
     });
-popupClose.addEventListener('click', () => {
-    popup.style.display = 'none';
-        });
-      
+
+ popup.addEventListener('click', (event) => {
+     let target = event.target;
+     if(target.classList.contains('popup-close')){
+        popup.style.display = 'none';
+     } else {
+        target = target.closest('.popup-content');
+
+        if(!target) {
+            popup.style.display = 'none';
+        }
+     }
+     
+ })     
     };
 
 togglePopup()
@@ -130,4 +143,39 @@ for (let anchor of anchors) {
 
     })
 }
+
+// табы
+const tabs = () => {
+    const tabHeader = document.querySelector('.service-header');
+    const tab = tabHeader.querySelectorAll('.service-header-tab');
+    const tabContent = document.querySelectorAll('.service-tab');
+    const toggleTabContent = (index) => {
+        for(let i = 0; i < tabContent.length; i++) {
+            if(index === i) {
+                tab[i].classList.add('active');
+                tabContent[i].classList.remove('d-none');
+            } else {
+                tab[i].classList.remove('active');
+                tabContent[i].classList.add('d-none');
+            }
+        }
+
+    }
+    tabHeader.addEventListener('click', (event) => {
+        let target = event.target;
+        target = target.closest('.service-header-tab');
+        if(target){
+            tab.forEach((item,i) => {
+                if(item === target) {
+                    toggleTabContent(i);
+                }
+            })
+        }
+    })
+
+}
+
+
+tabs()
+
 });
