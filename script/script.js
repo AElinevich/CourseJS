@@ -61,13 +61,11 @@ function updateclock(){
             let target = event.target;
             if(target.classList.contains('close-btn')){
                 menu.classList.remove('active-menu');
-                 } else {target = target.classList.contains('active-menu');
+                 } else {target = target.closest('.menu');
                  if(!target) {
                      console.log(target);
                     menu.classList.remove('active-menu');
-                }}
-                 
-               
+                }}              
 })
 
     };
