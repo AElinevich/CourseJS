@@ -132,18 +132,18 @@ const togglePopup = () => {
 togglePopup()
 
 // плавный скролл по якорям
-// const anchors = document.querySelectorAll('a[href*="#"]');
-// for (let anchor of anchors) {
-//     anchor.addEventListener('click', (evt) => {
-//         evt.preventDefault();
-//         const blockID = anchor.getAttribute('href')
-//     document.querySelector('' + blockID).scrollIntoView({
-//       behavior: "smooth",
-//       block: "start"
-//     })
+const anchors = document.querySelectorAll('a[href*="#"]');
+for (let anchor of anchors) {
+    anchor.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        const blockID = anchor.getAttribute('href')
+    document.querySelector('' + blockID).scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    })
 
-//     })
-// }
+    })
+}
 
 // табы
 const tabs = () => {
@@ -183,7 +183,6 @@ tabs()
 const slider = () => {
     const slide = document.querySelectorAll('.portfolio-item');
     const btn = document.querySelectorAll('.portfolio-btn');
-    const dot = document.querySelectorAll('.dot');
     const slider = document.querySelector('.portfolio-content');
     let portfolioDots = document.querySelector('.portfolio-dots');
     slide.forEach(function(elem){
@@ -216,6 +215,7 @@ const slider = () => {
   };
 
   const startSlide = (time = 3000) => {
+      dots[0].classList.add('dot-active');
       interval = setInterval(autoPlaySlide, time)
 
   };
