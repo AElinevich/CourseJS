@@ -67,15 +67,14 @@ class Todo {
   
     }
 
-    completedItem () {
+    completedItem (target) {
+        const key = target.closest('.todo-item').key;
+        const findKey = this.todoData.get(key);
+        findKey.completed = !findKey.completed;
       
-        this.todoData.forEach((elem)=>{
-      
-            console.log(elem.key)
-
-        })
+        }
        
-    }
+    
     editItem() {
        const todoEdit = document.querySelectorAll('.todo-edit');
         todoEdit.forEach(function (elem){
@@ -102,8 +101,7 @@ class Todo {
              this.deleteItem()
             } 
             if(target.classList.contains('todo-complete')){
-                console.log(target);
-             this.completedItem();
+             this.completedItem(target);
             }
             if(target.classList.contains('todo-edit')) {
                 this.editItem()
