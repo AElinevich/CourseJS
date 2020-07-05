@@ -62,14 +62,19 @@ class Todo {
    
     deleteItem() {
         let todoItem = document.querySelector('.todo-item');
-        todoItem.parentNode.removeChild(todoItem);
-
+            this.todoData.delete(todoItem.key);
+        this.render();
+  
     }
 
-    completedItem() {
-        todo.completed = true;
-        this.createItem(this);
+    completedItem () {
+      
+        this.todoData.forEach((elem)=>{
+      
+            console.log(elem.key)
 
+        })
+       
     }
     editItem() {
        const todoEdit = document.querySelectorAll('.todo-edit');
@@ -97,10 +102,12 @@ class Todo {
              this.deleteItem()
             } 
             if(target.classList.contains('todo-complete')){
+                console.log(target);
              this.completedItem();
             }
             if(target.classList.contains('todo-edit')) {
                 this.editItem()
+                
                } 
     
     })
