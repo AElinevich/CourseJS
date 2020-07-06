@@ -1,31 +1,31 @@
 'use strict';
 
 class Todo {
-    constructor(form, input, todoList, todoCompleted) {
-        this.form = document.querySelector(form);
-        this.input = document.querySelector(input);
-        this.todoList = document.querySelector(todoList);
-        this.todoCompleted = document.querySelector(todoCompleted);
-        this.todoData = new Map(JSON.parse(localStorage.getItem('toDoList')));
-        
-    }
+	constructor(form, input, todoList, todoCompleted, todoContainer) {
+		this.form = document.querySelector(form);
+		this.input = document.querySelector(input);
+		this.todoList = document.querySelector(todoList);
+		this.todoCompleted = document.querySelector(todoCompleted);
+		this.todoContainer = document.querySelector(todoContainer);
+		this.todoData = new Map(JSON.parse(localStorage.getItem('toDoList')));
+	}
 
-    addToStorage() {
-        localStorage.setItem('todoList', JSON.stringify([...this.todoData]));
-    }
+	addToStorage() {
+		localStorage.setItem('todoList', JSON.stringify([...this.todoData]));
+	}
 
-    render() {
-        this.todoList.textContent = ' ';
-        this.todoCompleted.textContent = ' ';
-        this.todoData.forEach(this.createItem, this);
-        this.addToStorage()
-    }
+	render() {
+		this.todoList.textContent = ' ';
+		this.todoCompleted.textContent = ' ';
+		this.todoData.forEach(this.createItem, this);
+		this.addToStorage()
+	}
 
-    createItem(todo) {
-        const li = document.createElement('li');
-        li.classList.add('todo-item');
-        li.key = todo.key;
-        li.insertAdjacentHTML('beforeend', `
+	createItem(todo) {
+		const li = document.createElement('li');
+		li.classList.add('todo-item');
+		li.key = todo.key;
+		li.insertAdjacentHTML('beforeend', `
         <span class="text-todo">${todo.value}</span>
                 <div class="todo-buttons">
                     <button class="todo-edit"></button>
@@ -33,92 +33,75 @@ class Todo {
 					<button class="todo-complete"></button>
 				</div>
         `);
+		if (todo.completed) {
+			this.todoCompleted.append(li);
+		} else {
+			this.todoList.append(li);
+		}
+	}
 
-        if(todo.completed) {
-            this.todoCompleted.append(li);
-            
-        } else {
-            this.todoList.append(li);
-        }
-    }
+	addTodo(e) {
+		e.preventDefault();
+		if (this.input.value.trim()) {
+			const newTodo = {
+				value: this.input.value,
+				completed: false,
+				key: this.generateKey(),
+			};
+			this.todoData.set(newTodo.key, newTodo);
+			this.render();
+			this.input.value = '';
+		} else { alert('Введите текст') }
+	}
+	generateKey() {
+		return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+	}
 
-    addTodo(e) {
-        e.preventDefault();
-     
-        if(this.input.value.trim()) {
-            const newTodo = {
-                value: this.input.value,
-                completed: false,
-                key: this.generateKey(),
-            };
-            this.todoData.set(newTodo.key, newTodo);
-            this.render();
-            this.input.value = '';
-        } else {alert('Введите текст')}
-    }
-    generateKey() {
-        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    }
-   
-    deleteItem() {
-        let todoItem = document.querySelector('.todo-item');
-            this.todoData.delete(todoItem.key);
-        this.render();
-  
-    }
+	deleteItem(target) {
+		const key = target.closest('.todo-item').key;
+		this.todoData.delete(key);
+		this.render();
+	}
 
-    completedItem (target) {
-        const key = target.closest('.todo-item').key;
-        const findKey = this.todoData.get(key);
-        findKey.completed = !findKey.completed;
-      
-        }
-       
-    
-    editItem() {
-       const todoEdit = document.querySelectorAll('.todo-edit');
-        todoEdit.forEach(function (elem){
-            elem.addEventListener('click', function func(){
-                let todoItem = document.querySelector('.todo-item');
-                let input = document.createElement('input');
-                input.value = todoItem.innerText;
-                todoItem.innerHTML = '';
-                todoItem.appendChild(input);
-
-                input.addEventListener('blur', function (){
-                    todoItem.innerText = input.value;
-                });
-                elem.removeEventListener('click', func)
-            })
-        })
-    }
-    handler = ()=> {
-        let todoContainer = document.querySelector('.todo-container');
-        todoContainer.addEventListener('click', (event) => {
-            event.preventDefault(); 
-            let target = event.target;
-            if(target.classList.contains('todo-remove')) {
-             this.deleteItem()
-            } 
-            if(target.classList.contains('todo-complete')){
-             this.completedItem(target);
-            }
-            if(target.classList.contains('todo-edit')) {
-                this.editItem()
-                
-               } 
-    
-    })
-    }
-
-    init() {
-        this.form.addEventListener('submit', this.addTodo.bind(this));
-        this.render();
-        this.handler();
-    }
-}
+	completedItem(target) {
+		const key = target.closest('.todo-item').key;
+		const findKey = this.todoData.get(key);
+		findKey.completed = !findKey.completed;
+		this.render();
+	}
 
 
-const todo = new Todo('.todo-control', '.header-input', '.todo-list', '.todo-completed');
+	editItem() {
+		const parent = target.closest('.todo-item');
+		const key = parent.key;
+		const findKey = this.todoData.get(key);
+		const textTodo = parent.querySelector('.text-todo');
 
-todo.init();
+		textTodo.setAttribute('contenteditable', 'true');
+		textTodo.focus();
+		textTodo.onblur = () => {
+			findKey.value = textTodo.textContent;
+			this.addToStorage();
+		};
+	}
+		handler = (e) => {
+			let target = e.target;
+			const complete = target.closest('.todo-complete');
+			const remove = target.closest('.todo-remove');
+			const edit = target.closest('.todo-edit');
+			if (complete) this.completedItem(target);
+			else if (remove) this.deleteItem(target);
+			else if (edit) this.editItem(target);
+			else return;
+		}
+
+		init() {
+			this.form.addEventListener('submit', this.addTodo.bind(this));
+			this.todoContainer.addEventListener('click', this.handler.bind(this));
+			this.render();
+		}
+	}
+
+	const todo = new Todo('.todo-control', '.header-input', '.todo-list', '.todo-completed', '.todo-container');
+
+	todo.init();
