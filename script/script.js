@@ -1,6 +1,8 @@
 window.addEventListener('DOMContentLoaded', function(){
     'use strict';
-    
+let isNumber = function(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n)
+    }
     // timer
 function countTimer(deadline) {
     let timerHours = document.querySelector('#timer-hours'); 
@@ -52,24 +54,20 @@ function updateclock(){
         const btnMenu = document.querySelector('.menu');
         const menu = document.querySelector('menu');
         const menuItems = menu.querySelectorAll('ul>li');
-    
-        btnMenu.addEventListener('click', () => {
-            menu.classList.add('active-menu');
-           
-        })
+    document.body.addEventListener('click', (event) =>{
+    event.preventDefault();
+    let target = event.target;
+    console.log(target);
+    if(target.closest('.menu')) {menu.classList.add('active-menu');
+    console.log(target);
 
-        menu.addEventListener('click', (event) => {
-            let target = event.target;
-            
-            if(target.classList.contains('close-btn')){
-                menu.classList.remove('active-menu');
-                 } if (!target.classList.contains('menu'))
-                   {console.log(target);
-                       menu.classList.remove('active-menu');
-                       return
-                    } 
-                        
-})
+    }
+    
+
+
+    }
+    )
+
 
     };
 
@@ -132,19 +130,32 @@ const togglePopup = () => {
 togglePopup()
 
 // плавный скролл по якорям
-const anchors = document.querySelectorAll('a[href*="#"]');
-for (let anchor of anchors) {
-    anchor.addEventListener('click', (evt) => {
-        evt.preventDefault();
-        const blockID = anchor.getAttribute('href')
-    document.querySelector('' + blockID).scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    })
+// const anchors = document.querySelectorAll('a[href*="#"]');
+// for (let anchor of anchors) {
+//     anchor.addEventListener('click', (evt) => {
+//         evt.preventDefault();
+//         const blockID = anchor.getAttribute('href')
+//     document.querySelector('' + blockID).scrollIntoView({
+//       behavior: "smooth",
+//       block: "start"
+//     })
 
-    })
+//     })
+// }
+// смена изображений
+const changeImages = () => {
+    const images = document.querySelectorAll('.command__photo');
+    images.forEach((item) => {
+        item.addEventListener('mouseenter', (event) => {
+            event.target.img = event.target.src;
+            event.target.src = event.target.dataset.img;
+        })
+        item.addEventListener('mouseleave', (event) => {
+            event.target.src = event.target.img;   
+        })      
+    }) 
 }
-
+changeImages();
 // табы
 const tabs = () => {
     const tabHeader = document.querySelector('.service-header');
@@ -275,5 +286,68 @@ const slider = () => {
 };
 
 slider()
+
+// калькулятор
+const calc = (price = 100) => {
+    const calcBlock = document.querySelector('.calc-block');
+    const calcType = document.querySelector('.calc-type');
+    const calcSquare = document.querySelector('.calc-square');
+    const calcDay = document.querySelector('.calc-day');
+    const calcCount = document.querySelector('.calc-count');
+    const totalValue = document.getElementById('total');
+    const calcBlockIem = calcBlock.querySelectorAll('input');
+
+    calcBlockIem.forEach((item) => {
+        item.addEventListener('input', ()=> {
+            if (!isNumber(item.value)){
+                return item.value = "";
+            }
+        })   
+    })
+    
+    const countSum = () => {
+        let total = 0;
+        let countValue = 1;
+        let dayValue = 1;
+        const typeValue = calcType.options[calcType.selectedIndex].value;
+        console.log(typeValue);
+        const squareValue = +calcSquare.value;
+    
+        if(calcCount.value > 1) {
+            countValue += (calcCount.value - 1) / 10;
+        }
+
+        if(calcDay.value && calcDay.value < 5) {
+            dayValue *= 2;
+        } else if (calcDay.value && calcDay.value < 10){
+            dayValue *= 1,5;
+        }
+
+        if (typeValue && squareValue) {
+            total = price * typeValue * squareValue * countValue * dayValue;
+        } 
+        totalValue.textContent = total;
+    };
+    calcBlock.addEventListener('change', (event) => {
+        const target = event.target;
+        // if(target.matches('.calc-type') || target.matches('.calc-square') || 
+        // target.matches('.calc-day') || target.matches('.calc-count')) {
+        //     console.log(1);
+        // }
+        
+
+        // if(target === calcType || target === calcSquare || target === calcDay || target === calcCount){
+        //     console.log(1);
+        // }
+
+        if(target.matches('select') || target.matches('input')) {
+          
+            countSum()
+        }
+    })
+    
+
+}
+calc(100);
 
 });
