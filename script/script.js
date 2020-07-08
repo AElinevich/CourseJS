@@ -311,6 +311,7 @@ const calc = (price = 100) => {
         let total = 0;
         let countValue = 1;
         let dayValue = 1;
+        let result;
         const typeValue = calcType.options[calcType.selectedIndex].value;
         console.log(typeValue);
         const squareValue = +calcSquare.value;
@@ -326,9 +327,20 @@ const calc = (price = 100) => {
         }
 
         if (typeValue && squareValue) {
-            total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
+          total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
         } 
-        totalValue.textContent = total;
+        function numAnimate () {
+            var number = 1;
+            setInterval(function () {
+                number++;
+                if (number<=total) { 
+                    totalValue.textContent = number;
+                };
+            }, 0,1);
+        }
+        numAnimate()
+
+        
     };
     calcBlock.addEventListener('change', (event) => {
         const target = event.target;
