@@ -161,6 +161,8 @@ const tabs = () => {
     const tabHeader = document.querySelector('.service-header');
     const tab = tabHeader.querySelectorAll('.service-header-tab');
     const tabContent = document.querySelectorAll('.service-tab');
+    tabContent[1].classList.add('d-none');
+    tabContent[2].classList.add('d-none');
     const toggleTabContent = (index) => {
         for(let i = 0; i < tabContent.length; i++) {
             if(index === i) {
@@ -317,14 +319,14 @@ const calc = (price = 100) => {
             countValue += (calcCount.value - 1) / 10;
         }
 
-        if(calcDay.value && calcDay.value < 5) {
+        if(calcDay.value && calcDay.value <= 5) {
             dayValue *= 2;
-        } else if (calcDay.value && calcDay.value < 10){
+        } else if (calcDay.value && calcDay.value <= 10){
             dayValue *= 1,5;
         }
 
         if (typeValue && squareValue) {
-            total = price * typeValue * squareValue * countValue * dayValue;
+            total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
         } 
         totalValue.textContent = total;
     };
