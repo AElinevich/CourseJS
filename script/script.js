@@ -330,7 +330,7 @@ const calc = (price = 100) => {
           total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
         } 
         function numAnimate () {
-            var number = 1;
+            let number = 1;
             setInterval(function () {
                 number++;
                 if (number<=total) { 
@@ -339,8 +339,7 @@ const calc = (price = 100) => {
             }, 0,1);
         }
         numAnimate()
-
-        
+   
     };
     calcBlock.addEventListener('change', (event) => {
         const target = event.target;
