@@ -58,11 +58,19 @@ function updateclock(){
     document.body.addEventListener('click', (event) =>{
     event.preventDefault();
     let target = event.target;
-    console.log(target);
+//    console.log(target);
     if(target.closest('.menu')) {menu.classList.add('active-menu');
     console.log(target);
 
-    }
+}
+
+    if(target.closest('.close-btn')) {menu.classList.remove('active-menu');}
+    
+
+
+    
+
+    
     
 
 
@@ -331,15 +339,18 @@ const calc = (price = 100) => {
         } 
         function numAnimate () {
             let number = 1;
-            setInterval(function () {
+      let timeId = setInterval(function () {
                 number++;
                 if (number<=total) { 
                     totalValue.textContent = number;
-                    if (calcType) {return}
-                } 
-                
-            }, 0,1);
-        }
+                    timeId
+                    calcType.addEventListener('change', () => {
+                        clearInterval(timeId)
+                    })
+                    }
+            }       
+    , 0,1);
+    } 
         numAnimate()
    
     };
@@ -370,13 +381,41 @@ const sendForm = () => {
         loadMessage = 'Загружается...',
         successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
 
-    const form = document.getElementById('form1');
+    const forms = document.querySelectorAll('form');
+    const inputs = document.querySelectorAll('input');
+    const phoneInputs = document.querySelectorAll('input[placeholder="Номер телефона"]');
+    const nameInputs = document.querySelectorAll('input[placeholder="Ваше имя"]');
+    const messageInput = document.querySelector('input[name="user_message"]');
+// валидация инпутов
+    phoneInputs.forEach(item => {
+              item.addEventListener('input', () => {
+            item.value = item.value.replace(/[^0-9+]/g, '');
+        });
+    });
+    
+    nameInputs.forEach(item => {
+        item.addEventListener('input', () => {
+            item.value = item.value.replace(/[^а-яёА-ЯЁ\s]/g, '');
+        });
+    });
+    messageInput.addEventListener('input', () => {
+        messageInput.value = messageInput.value.replace(/[^а-яёА-ЯЁ\s]/g, '');
+    });
+
+// очистка инпутов
+    const clearInputs = () => {
+        inputs.forEach(item => {
+            item.value = '';
+        })
+    }
 
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'font-size: 2rem';
+    forms.forEach(form => {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         form.appendChild(statusMessage);
+        
         statusMessage.textContent = loadMessage;
         const formData = new FormData(form);
         let body = {};
@@ -388,6 +427,7 @@ const sendForm = () => {
         formData.forEach((val,key) => {
             body[key] = val;
         });
+        console.log(formData);
         postData(body, 
             () => {
                 statusMessage.textContent = successMessage;
@@ -398,6 +438,7 @@ const sendForm = () => {
         });
                
     });
+});
     const postData = (body, outputData, errorData) => {
         const request = new XMLHttpRequest();
 
@@ -407,13 +448,14 @@ const sendForm = () => {
                 return;
             }
             if(request.status === 200) {
-                outputData()
+                outputData();
+                clearInputs()
                 
             } else {
                 errorData(request.status);
+                clearInputs()
                 
-                
-                
+                              
             }
         });
 
