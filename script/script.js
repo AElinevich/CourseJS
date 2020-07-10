@@ -35,7 +35,7 @@ function updateclock(){
         
 
     if(timer.timeRemaining > 0) {
-        // setInterval(updateclock, 1000)
+        setInterval(updateclock, 1000)
     }  
 
     else {
@@ -97,7 +97,7 @@ const togglePopup = () => {
         let timer = setInterval(function() {
         let timePassed = Date.now() - start;
         
-        if (timePassed >= 3500) {
+        if (timePassed >= 2500) {
             clearInterval(timer); 
             return;
         }
@@ -105,12 +105,13 @@ const togglePopup = () => {
         if(width < 768) {
             clearInterval(timer); 
             popup.style.display = 'block';
+            popup.style.margin = 'auto';
             return;
         }  
     
     show(timePassed);
 
-    }, 10);
+    }, 50);
 
     function show(timePassed) {
         popupContent.style.left = timePassed / 5 + 'px';
@@ -397,7 +398,7 @@ const sendForm = () => {
         });
     });
     messageInput.addEventListener('input', () => {
-        messageInput.value = messageInput.value.replace(/[^а-яёА-ЯЁ\s]/g, '');
+        messageInput.value = messageInput.value.replace(/[^?!.,:\-/;'()*0-9а-яёА-ЯЁ\s]/g, '');
     });
 
 // очистка инпутов
@@ -409,6 +410,7 @@ const sendForm = () => {
 
     const statusMessage = document.createElement('div');
     statusMessage.style.cssText = 'font-size: 2rem';
+    statusMessage.style.color = '#ffffff';
     forms.forEach(form => {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
