@@ -1,6 +1,5 @@
 window.addEventListener('DOMContentLoaded', function(){
     'use strict';
-
 let isNumber = function(n) {
         return !isNaN(parseFloat(n)) && isFinite(n)
     }
@@ -56,7 +55,6 @@ function updateclock(){
         const menu = document.querySelector('menu');
         const menuItems = menu.querySelectorAll('ul>li');
     document.body.addEventListener('click', (event) =>{
-    event.preventDefault();
     let target = event.target;
 //    console.log(target);
     if(target.closest('.menu')) {menu.classList.add('active-menu');
