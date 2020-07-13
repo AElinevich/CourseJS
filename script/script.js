@@ -375,7 +375,7 @@ const calc = (price = 100) => {
 }
 calc(100);
 // send-adjax-form 
-const sendForm = () => {
+const sendForm = (body) => {
     const errorMessage = 'Что-то пошло не так...',
         loadMessage = 'Загружается...',
         successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
@@ -407,15 +407,19 @@ const sendForm = () => {
             item.value = '';
         })
     }
-
+    //    const spinner = document.createElement('img');
+    //    spinner.setAttribute('src', './images/Spin-1s-91px.svg');
+  
     const statusMessage = document.createElement('div');
+    statusMessage.innerHTML = 
+    `<img src="./images/Spin-1s-91px.svg"`;
     statusMessage.style.cssText = 'font-size: 2rem';
-    statusMessage.style.color = '#ffffff';
+
     forms.forEach(form => {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         form.appendChild(statusMessage);
-        
+      
         statusMessage.textContent = loadMessage;
         const formData = new FormData(form);
         let body = {};
@@ -431,42 +435,52 @@ const sendForm = () => {
         postData(body, 
             () => {
                 statusMessage.textContent = successMessage;
+               
         }, 
             (error) => {
                 statusMessage.textContent = errorMessage;
+              
+              
                 console.log(error);
+
         });
                
     });
 });
-    const postData = (body, outputData, errorData) => {
-        const request = new XMLHttpRequest();
+    const postData = (body) => {
+        return new Promise ((resolve, reject) =>{
+            const request = new XMLHttpRequest();
 
-        request.addEventListener('readystatechange', () => {
+            request.addEventListener('readystatechange', () => {
+                
+                if(request.readyState !==4) {
+                    return;
+                }
+                if(request.status === 200) {
+                    resolve(response);
+                    clearInputs()
+                    
+                } else {
+                    reject(request.status);
+                    clearInputs()
+                    
+                                  
+                }
+            });
+    
+            request.open('POST', './server.php');
+            request.setRequestHeader('Content-Type', 'application/json');
             
-            if(request.readyState !==4) {
-                return;
-            }
-            if(request.status === 200) {
-                outputData();
-                clearInputs()
-                
-            } else {
-                errorData(request.status);
-                clearInputs()
-                
-                              
-            }
-        });
-
-        request.open('POST', './server.php');
-        request.setRequestHeader('Content-Type', 'application/json');
-        
-        request.send(JSON.stringify(body));
+            request.send(JSON.stringify(body));
+    
+            
+        })
 
     }
-
+    postData(body)
+    .then(sendForm)
+    .catch(error => console.error(error))
+    
 };
-sendForm();
 
 });
