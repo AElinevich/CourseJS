@@ -422,17 +422,22 @@ const sendForm = () => {
       
         statusMessage.textContent = loadMessage;
         const formData = new FormData(form);
-        let body = {};
+        statusMessage.textContent = loadMessage;
+        // let body = {};
 
         // for (let val of formData.entries()){
         //     body[val[0]] = val[1];
         // }
         //альтернативный способ перебора
-        formData.forEach((val,key) => {
-            body[key] = val;
-        });
-        postData(body)
-        .then(() => {
+        // formData.forEach((val,key) => {
+        //     body[key] = val;
+        // });
+        postData(formData)
+        .then((response) => {
+            if(response.status !== 200) {
+                throw new Error('status network not 200');
+            }
+console.log(response)
                 statusMessage.textContent = successMessage;      
         })
         .catch((error) => {
@@ -442,37 +447,16 @@ const sendForm = () => {
     });
 });
     const postData = (body) => {
-        return new Promise ((resolve, reject) =>{
-            const request = new XMLHttpRequest();
-
-            request.addEventListener('readystatechange', () => {
-                
-                if(request.readyState !==4) {
-                    return;
-                }
-                if(request.status === 200) {
-                    resolve(response);
-                    clearInputs();
-                    
-                } else {
-                    reject(request.status);
-                    clearInputs();
-                    
-                                  
-                }
-            });
+        return fetch('./server.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+    },
+            body: 'formData'
     
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-            
-            request.send(JSON.stringify(body));
-    
-            
-        })
-
+}); 
     }
-   
-    
+       
 };
 sendForm();
 });
