@@ -471,8 +471,8 @@ const sendForm = () => {
         })
 
     }
-    sendForm();
+   
     
 };
-
+sendForm();
 });
