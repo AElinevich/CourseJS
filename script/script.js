@@ -375,7 +375,7 @@ const calc = (price = 100) => {
 }
 calc(100);
 // send-adjax-form 
-const sendForm = (body) => {
+const sendForm = () => {
     const errorMessage = 'Что-то пошло не так...',
         loadMessage = 'Загружается...',
         successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
@@ -431,20 +431,13 @@ const sendForm = (body) => {
         formData.forEach((val,key) => {
             body[key] = val;
         });
-        console.log(formData);
-        postData(body, 
-            () => {
-                statusMessage.textContent = successMessage;
-               
-        }, 
-            (error) => {
-                statusMessage.textContent = errorMessage;
-              
-              
-                console.log(error);
-
-        });
-               
+        postData(body)
+        .then(() => {
+                statusMessage.textContent = successMessage;      
+        })
+        .catch((error) => {
+                statusMessage.textContent = errorMessage;    
+        });   
     });
 });
     const postData = (body) => {
@@ -458,11 +451,11 @@ const sendForm = (body) => {
                 }
                 if(request.status === 200) {
                     resolve(response);
-                    clearInputs()
+                    clearInputs();
                     
                 } else {
                     reject(request.status);
-                    clearInputs()
+                    clearInputs();
                     
                                   
                 }
@@ -477,9 +470,7 @@ const sendForm = (body) => {
         })
 
     }
-    postData(body)
-    .then(sendForm)
-    .catch(error => console.error(error))
+    sendForm();
     
 };
 
