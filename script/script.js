@@ -436,6 +436,7 @@ const sendForm = () => {
                 statusMessage.textContent = successMessage;      
         })
         .catch((error) => {
+            console.log(error);
                 statusMessage.textContent = errorMessage;    
         });   
     });
