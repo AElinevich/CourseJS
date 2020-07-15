@@ -1,18 +1,19 @@
      const toggleMenu = () => {
         const btnMenu = document.querySelector('.menu');
         const menu = document.querySelector('menu');
-        const menuItems = menu.querySelectorAll('ul>li');
-        const anchors = document.querySelectorAll('a[href*="#"]');
+        const menuItems = menu.querySelector('ul');
+        const anchors = menuItems.querySelectorAll('a[href*="#"]');
         
         for (let anchor of anchors) {
-        anchor.addEventListener('click', (evt) => {
-        evt.preventDefault();
-        const blockID = anchor.getAttribute('href');
-        menu.classList.remove('active-menu');
-        document.querySelector('' + blockID).scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    })
+        anchor.addEventListener('click', (evt) => {        
+                evt.preventDefault();
+                const blockID = anchor.getAttribute('href');
+                menu.classList.remove('active-menu');
+                document.querySelector('' + blockID).scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            })    
+                 
 
     })
 }
