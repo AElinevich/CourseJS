@@ -1,9 +1,7 @@
 const togglePopup = () => {
     const popup = document.querySelector('.popup');
     const popupBtn = document.querySelectorAll('.popup-btn');
-    const popupContent = document.querySelector('.popup-content')
-    
-    
+    const popupContent = document.querySelector('.popup-content');
     popupBtn.forEach((elem) => {
         elem.addEventListener('click', () => {
             popup.style.display = 'block';
@@ -45,6 +43,7 @@ popup.addEventListener('click', (event) => {
     if(!target) {
         popup.style.display = 'none';
     }
+
  }
  
 })     

@@ -23,7 +23,6 @@ const calc = (price = 100) => {
         let countValue = 1;
         let dayValue = 1;
         const typeValue = calcType.options[calcType.selectedIndex].value;
-        console.log(typeValue);
         const squareValue = +calcSquare.value;
     
         if(calcCount.value > 1) {

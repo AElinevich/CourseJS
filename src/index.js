@@ -17,18 +17,6 @@ import calc from './modules/calc';
 import sendForm from './modules/sendForm';
 
 // плавный скролл по якорям
-const anchors = document.querySelectorAll('a[href*="#"]');
-for (let anchor of anchors) {
-    anchor.addEventListener('click', (evt) => {
-        evt.preventDefault();
-        const blockID = anchor.getAttribute('href')
-    document.querySelector('' + blockID).scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    })
-
-    })
-}
 // timer
 countTimer('30 july 2020')
 // меню
@@ -46,3 +34,5 @@ calc(100);
 // send-adjax-form 
 sendForm();
 
+
+    

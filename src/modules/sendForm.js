@@ -32,11 +32,11 @@ const sendForm = () => {
     }
     //    const spinner = document.createElement('img');
     //    spinner.setAttribute('src', './images/Spin-1s-91px.svg');
-  
     const statusMessage = document.createElement('div');
-    statusMessage.innerHTML = 
-    `<img src="./images/Spin-1s-91px.svg"`;
+    // statusMessage.innerHTML = 
+    // `<img src="./images/Spin-1s-91px.svg"`;
     statusMessage.style.cssText = 'font-size: 2rem';
+    statusMessage.style.ccssText = 'color: red !important';
 
     forms.forEach(form => {
     form.addEventListener('submit', (event) => {
