@@ -14,7 +14,7 @@ const sendForm = () => {
             item.value = item.value.replace(/[^0-9+]/g, '');
         });
     });
-    
+
     nameInputs.forEach(item => {
         item.addEventListener('input', () => {
             item.value = item.value.replace(/[^а-яёА-ЯЁ\s]/g, '');
@@ -32,17 +32,17 @@ const sendForm = () => {
     }
     //    const spinner = document.createElement('img');
     //    spinner.setAttribute('src', './images/Spin-1s-91px.svg');
+
     const statusMessage = document.createElement('div');
-    // statusMessage.innerHTML = 
-    // `<img src="./images/Spin-1s-91px.svg"`;
+    statusMessage.innerHTML = 
+    `<img src="./images/Spin-1s-91px.svg"`;
     statusMessage.style.cssText = 'font-size: 2rem';
-    statusMessage.style.ccssText = 'color: red !important';
 
     forms.forEach(form => {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         form.appendChild(statusMessage);
-      
+
         statusMessage.textContent = loadMessage;
         const formData = new FormData(form);
         statusMessage.textContent = loadMessage;
@@ -59,7 +59,7 @@ const sendForm = () => {
         .then((response) => {
             if(response.status !== 200) {
                 throw new Error('status network not 200');
-               
+
             }
 console.log(response)
                 statusMessage.textContent = successMessage;    
@@ -79,11 +79,11 @@ console.log(response)
                 'Content-Type': 'application/json',
     },
             body: 'formData'
-    
+
 }); 
     }
-       
+
 };
 
 
-export default sendForm;
+export default sendForm; 

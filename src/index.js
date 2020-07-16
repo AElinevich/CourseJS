@@ -16,7 +16,7 @@ import slider from './modules/slider';
 import calc from './modules/calc';
 import sendForm from './modules/sendForm';
 
-// плавный скролл по якорям
+
 // timer
 countTimer('30 july 2020')
 // меню

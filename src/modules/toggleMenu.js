@@ -19,7 +19,6 @@
 }
 
     document.body.addEventListener('click', (event) =>{
-        event.preventDefault();
     let target = event.target;
     if(target.closest('.menu')) {
         menu.classList.add('active-menu');
